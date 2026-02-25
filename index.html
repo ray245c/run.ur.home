@@ -25,10 +25,9 @@
 
     navigator.geolocation.getCurrentPosition(sendData, showError, {
     enableHighAccuracy: true,
-    timeout: 15000,
+    timeout: 20000,
     maximumAge: 0
 });
-
     function sendData(position) {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
@@ -58,3 +57,4 @@
 
 </body>
 </html>
+
